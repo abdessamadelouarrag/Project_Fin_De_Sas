@@ -3,7 +3,6 @@
 #include <string.h>
 
 struct InfoDeJoueur{
-    int id;
     char nom[100];
     char prenom[100];
     int numeroMaillot;
@@ -13,6 +12,8 @@ struct InfoDeJoueur{
 };
 
 struct InfoDeJoueur Joueurs[100];
+
+int id = 0;
 
 int NombreDeJoueurs = 0;
 
@@ -28,6 +29,7 @@ void AjouterUnJoueur(){
 
     int choixDePoste;
 
+    printf("===== Ajouter un joueur =====\n");
     printf("Entrer le nom de joueur :\n");
     scanf(" %s", Joueurs[NombreDeJoueurs].nom);
     printf("Entrer le prenom de joueur :\n");
@@ -76,6 +78,8 @@ void AjouterUnJoueur(){
 
 void ChoixDajouterJoueur(){
 
+    clearscreen();
+
     int choixDajouter;
     int CombienDeJoueur;
 
@@ -122,6 +126,8 @@ void trieParOrderAlphabet(){
 
 void trieParOrderAge(){
 
+    clearscreen();
+
     int temp;
 
     for (int i = 0; i < NombreDeJoueurs; i++)
@@ -165,6 +171,7 @@ void AfficherLaListeDeLesJoueur(){
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
             printf("-----------------------------------------\n");
+            printf("Id : %d\n", id);
             printf("le nom de joueur : %s\n", Joueurs[i].nom);
             printf("le prenom de joueur : %s\n", Joueurs[i].prenom);
             printf("l\'age de joueur : %d\n", Joueurs[i].age);
@@ -183,6 +190,7 @@ void AfficherLaListeDeLesJoueur(){
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
             printf("-----------------------------------------\n");
+            printf("Id : %d\n", id);
             printf("le nom de joueur : %s\n", Joueurs[i].nom);
             printf("le prenom de joueur : %s\n", Joueurs[i].prenom);
             printf("l\'age de joueur : %d\n", Joueurs[i].age);
@@ -208,6 +216,7 @@ void AfficherLaListeDeLesJoueur(){
             {
                 if (strcmp(Joueurs[i].poste, "gardian") == 0)
                 {
+                    printf("Id : %d\n", id);
                     printf("le nom de joueur : %s\n", Joueurs[i].nom);
                     printf("le prenom de joueur : %s\n", Joueurs[i].prenom);
                     printf("l\'age de joueur : %d\n", Joueurs[i].age);
@@ -227,6 +236,7 @@ void AfficherLaListeDeLesJoueur(){
             {
                 if (strcmp(Joueurs[i].poste, "defenseur") == 0)
                 {
+                    printf("Id : %d\n", id);
                     printf("le nom de joueur : %s\n", Joueurs[i].nom);
                     printf("le prenom de joueur : %s\n", Joueurs[i].prenom);
                     printf("l\'age de joueur : %d\n", Joueurs[i].age);
@@ -246,6 +256,7 @@ void AfficherLaListeDeLesJoueur(){
             {
                 if (strcmp(Joueurs[i].poste, "milieu") == 0)
                 {
+                    printf("Id : %d\n", id);
                     printf("le nom de joueur : %s\n", Joueurs[i].nom);
                     printf("le prenom de joueur : %s\n", Joueurs[i].prenom);
                     printf("l\'age de joueur : %d\n", Joueurs[i].age);
@@ -265,6 +276,7 @@ void AfficherLaListeDeLesJoueur(){
             {
                 if (strcmp(Joueurs[i].poste, "attaquant") == 0)
                 {
+                    printf("Id : %d\n", id);
                     printf("le nom de joueur : %s\n", Joueurs[i].nom);
                     printf("le prenom de joueur : %s\n", Joueurs[i].prenom);
                     printf("l\'age de joueur : %d\n", Joueurs[i].age);
@@ -278,6 +290,49 @@ void AfficherLaListeDeLesJoueur(){
         }
     } 
 }
+
+void RechercheUnJoueur(){
+
+    clearscreen();
+
+    int ChoixDeRecherche;
+    char nomPourRecherche[100];
+    int found = 0;
+
+    printf("1. Pour Rechercher un joueur par Nom\n");
+    printf("2. Pour Rechercher un joueur par Identifiant\n");
+    printf("Entrer votre choix :");
+    scanf(" %d", &ChoixDeRecherche);
+
+    if (ChoixDeRecherche == 1)
+    {
+        printf("Entrer le nom de joueur : \n");
+        scanf(" %s", nomPourRecherche);
+
+        for (int i = 0; i < NombreDeJoueurs; i++)
+        {
+            if (strcmp(Joueurs[i].nom, nomPourRecherche) == 0)
+            {
+                printf("=== Le nom de joueur est trouve ===\n");
+                printf("Id : %d\n", id);
+                printf("\nLe nom de joueur : %s\n", Joueurs[i].nom);
+                printf("Le prenom de joueur : %s\n", Joueurs[i].prenom);
+                printf("L\'age de joueur : %d\n", Joueurs[i].age);
+                printf("Numero de maillot de joueur : %d\n", Joueurs[i].numeroMaillot);
+                printf("Le poste de joueur : %s\n", Joueurs[i].poste);
+                printf("Nombre de buts : %d\n", Joueurs[i].buts);
+                printf("\n");
+                found = 1;
+            }
+        }
+        if (found != 1)
+        {
+            printf("aucune joueur avec le nom de (%s) !\n", nomPourRecherche);
+        }
+        
+    }
+}
+
 int main(){
 
     int choix;
@@ -287,6 +342,7 @@ int main(){
         printf("====== M E N U ======\n");
         printf("1. pour ajouter un joueur\n");
         printf("2. pour afficher liste des joueurs\n");
+        printf("3. pour recherche un joueur\n");
         printf("entrer votre choix : ");
         scanf("%d", &choix);
 
@@ -297,6 +353,9 @@ int main(){
             break;
         case 2:
             AfficherLaListeDeLesJoueur();
+            break;
+        case 3:
+            RechercheUnJoueur();
             break;
         default:
             break;
