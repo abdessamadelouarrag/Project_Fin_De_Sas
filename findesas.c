@@ -31,20 +31,25 @@ void AjouterUnJoueur(){
     int choixDePoste;
 
     printf("===== Ajouter un joueur =====\n");
-    printf("Entrer le nom de joueur :\n");
+    printf("Entrer le nom de joueur \n");
+    printf("=> ");
     scanf(" %s", Joueurs[NombreDeJoueurs].nom);
     printf("Entrer le prenom de joueur :\n");
+    printf("=> ");
     scanf(" %s", Joueurs[NombreDeJoueurs].prenom);
     printf("Entrer l\'age de joueur : \n");
+    printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].age);
     printf("Entrer numero de maillot : \n");
+    printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
     printf("--> Entrer le poste de joureur : \n");
-    printf("1. pour le gardien\n");
-    printf("2. pour le defenseur\n");
-    printf("3. pour le milieu\n");
-    printf("4. pour le attaquant\n");
-    printf("Entrer Le Choix De poste :");
+    printf("\t1. pour le gardien\n");
+    printf("\t2. pour le defenseur\n");
+    printf("\t3. pour le milieu\n");
+    printf("\t4. pour le attaquant\n");
+    printf("Entrer Le Choix De poste :\n");
+    printf("=> ");
     scanf(" %d", &choixDePoste);
     getchar();
 
@@ -87,9 +92,13 @@ void ChoixDajouterJoueur(){
     int choixDajouter;
     int CombienDeJoueur;
 
+    printf("==== Le choix d\'ajouter ====\n");
+
     printf("1. pour un nouveau joueur \n");
     printf("2. pour ajouter plusieurs joueurs \n");
+    printf("Entrer le choix 1 ou 2 : ");
     scanf(" %d", &choixDajouter);
+    getchar();
 
     if (choixDajouter == 1)
     {
@@ -368,6 +377,38 @@ void RechercheUnJoueur(){
     
 }
 
+void ModifierUnJoueur(){
+
+    char nomRecherche[100];
+    char ouiNon;
+
+    printf("Entrer le nom de joueur : \n");
+    scanf(" %s", nomRecherche);
+
+    for (int i = 0; i < NombreDeJoueurs; i++)
+    {
+        if (strcmp(Joueurs[i].nom, nomRecherche) == 0)
+        {
+            printf("=== le joueur existe ===\n");
+            printf("Modifier le poste d\'un joueur (O = oui / N = non) :");
+            scanf(" %c", &ouiNon);
+
+            if (ouiNon == 'o' || ouiNon == 'O')
+            {
+                printf("\t1. pour le gardien\n");
+                printf("\t2. pour le defenseur\n");
+                printf("\t3. pour le milieu\n");
+                printf("\t4. pour le attaquant\n");
+                printf("Entrer Le Choix De poste :\n");
+                printf("=> ");
+                scanf(" %s", Joueurs[i].poste);
+            }
+            
+        }
+        
+    }
+    
+}
 int main(){
 
     clearscreen();
@@ -380,6 +421,7 @@ int main(){
         printf("1. pour ajouter un joueur\n");
         printf("2. pour afficher liste des joueurs\n");
         printf("3. pour recherche un joueur\n");
+        printf("4. pour modifier un joueur\n");
         printf("entrer votre choix : ");
         scanf("%d", &choix);
 
@@ -393,6 +435,9 @@ int main(){
             break;
         case 3:
             RechercheUnJoueur();
+            break;
+        case 4:
+            ModifierUnJoueur();
             break;
         default:
             break;
