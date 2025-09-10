@@ -6,17 +6,29 @@ struct InfoDeJoueur{
     int id;
     char nom[100];
     char prenom[100];
+    int age;
     int numeroMaillot;
     char poste[100];
-    int age;
     int buts;
 };
 
-struct InfoDeJoueur Joueurs[100];
+struct InfoDeJoueur Joueurs[100] = {
+    {1,"hakimi","achraf",25,2,"defenseur",5},
+    {2,"bounou","yassine",33,1,"gardian",0},
+    {3,"en-nesyri","youssef",28,9,"attaquant",12},
+    {4,"amrabat","sofyan",29,4,"milieu",3},
+    {5,"ziyech","hakim",32,7,"milieu",8},
+    {6,"mazraoui","noussair",27,3,"defenseur",2},
+    {7,"saiss","romain",35,6,"defenseur",1},
+    {8,"ounahi","azzedine",24,8,"milieu",4},
+    {9,"aboukhlal","zakho",26,11,"attaquant",10},
+    {10,"el kaabi","ayoub",32,17,"attaquant",15}
 
-int nextid = 1;
+};
 
-int NombreDeJoueurs = 0;
+int nextid = 11;
+
+int NombreDeJoueurs = 10;
 
 void clearscreen(){
     system("cls || clear");
@@ -79,10 +91,18 @@ void AjouterUnJoueur(){
     printf("Entrer Combien De Buts : ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].buts);
 
+    printf("tu a ajouter un joueur...\n");
+
+    printf("appuyez sur entre...");
+    getchar();
+    getchar();
+
     Joueurs[NombreDeJoueurs].id = nextid;
     nextid++;
 
     NombreDeJoueurs++;
+
+    clearscreen();
 }
 
 void ChoixDajouterJoueur(){
@@ -117,48 +137,45 @@ void ChoixDajouterJoueur(){
     }
 }
 
-void trieParOrderAlphabet(){
+    void trieParOrderAlphabet(){
 
-    char temp[100];
+        struct InfoDeJoueur temp;
 
-    //tri par order alphabe
+        //tri par order alphabe
 
-    for (int i = 0; i < NombreDeJoueurs; i++)
-    {
-        for (int j = 0; j < NombreDeJoueurs - 1 ; j++)
+        for (int i = 0; i < NombreDeJoueurs; i++)
         {
-            if (strcmp(Joueurs[j].nom, Joueurs[j + 1].nom) > 0)
+            for (int j = 0; j < NombreDeJoueurs - 1 ; j++)
             {
-                strcpy(temp, Joueurs[j].nom);
-                strcpy(Joueurs[j].nom, Joueurs[j+1].nom);
-                strcpy(Joueurs[j+1].nom, temp);
+                if (strcmp(Joueurs[j].nom, Joueurs[j + 1].nom) > 0)
+                {
+                    temp = Joueurs[j];
+                    Joueurs[j] =Joueurs[j+1];
+                    Joueurs[j+1] = temp;
+                }
             }
         }
     }
-}
 
-void trieParOrderAge(){
+    void trieParOrderAge(){
 
-    clearscreen();
+        clearscreen();
 
-    int temp;
+        struct InfoDeJoueur temp;
 
-    for (int i = 0; i < NombreDeJoueurs; i++)
-    {
-        for (int j = 0; j < NombreDeJoueurs - 1 ; j++)
+        for (int i = 0; i < NombreDeJoueurs; i++)
         {
-            if (Joueurs[j].age > Joueurs[j+1].age)
+            for (int j = 0; j < NombreDeJoueurs - 1 ; j++)
             {
-                temp = Joueurs[j].age;
-                Joueurs[j].age = Joueurs[j+1].age;
-                Joueurs[j+1].age = temp;
-            }
-            
-        }
-        
+                if (Joueurs[j].age > Joueurs[j+1].age)
+                {
+                    temp = Joueurs[j];
+                    Joueurs[j] = Joueurs[j+1];
+                    Joueurs[j+1] = temp;
+                }
+            }  
+        } 
     }
-    
-}
 
 
 void AfficherLaListeDeLesJoueur(){
@@ -168,11 +185,14 @@ void AfficherLaListeDeLesJoueur(){
     int choixDeTrie;
     int choixDePoste;
 
+    printf("======== Afficher les joueurs ========\n");
     printf("1. Trier les joueurs par ordre alphabetique (Nom)\n");
     printf("2. Trier les joueurs par age\n");
     printf("3. Afficher les joueurs par poste\n");
     printf("Entrer le choix :");
     scanf(" %d", &choixDeTrie);
+
+    clearscreen();
 
     if (choixDeTrie == 1)
     {
@@ -301,7 +321,12 @@ void AfficherLaListeDeLesJoueur(){
                 }
             }
         }
-    } 
+    }
+    printf("appuyez sur entre...");
+    getchar();
+    getchar();
+
+    clearscreen();
 }
 
 void RechercheUnJoueur(){
@@ -403,11 +428,26 @@ void ModifierUnJoueur(){
                 printf("=> ");
                 scanf(" %s", Joueurs[i].poste);
             }
-            
+
+            printf("Modifier l\'age d\'un joueur (O = oui / N = non) :");
+            scanf(" %c", &ouiNon);
+
+            if (ouiNon == 'o' || ouiNon == 'O')
+            {
+                printf("Entrer Nouvelle Age :");
+                scanf(" %d", &Joueurs[i].age);
+            }
+
+            printf("Modifier le nombre de buts marques par un  (O = oui / N = non) :");
+            scanf(" %c", &ouiNon);
+
+            if (ouiNon == 'o' || ouiNon == 'O')
+            {
+                printf("Entrer Nouveau Nombre De Buts :");
+                scanf(" %d", &Joueurs[i].buts);
+            }
         }
-        
     }
-    
 }
 int main(){
 
@@ -417,29 +457,34 @@ int main(){
 
     do
     {
-        printf("====== M E N U ======\n");
-        printf("1. pour ajouter un joueur\n");
-        printf("2. pour afficher liste des joueurs\n");
-        printf("3. pour recherche un joueur\n");
-        printf("4. pour modifier un joueur\n");
-        printf("entrer votre choix : ");
+
+        printf(" =============== M E N U ============= \n");
+        printf("| 1. pour ajouter un joueur           |\n");
+        printf("| 2. pour afficher liste des joueurs  |\n");
+        printf("| 3. pour recherche un joueur         |\n");
+        printf("| 4. pour modifier un joueur          |\n");
+        printf("| 5. pour supprimer un joueur         |\n");
+        printf("| 6. pour les statistiques            |\n");
+        printf(" ===================================== \n");
+        printf("==> Entrer votre choix : ");
         scanf("%d", &choix);
 
         switch (choix)
         {
-        case 1:
+        case '1':
             ChoixDajouterJoueur();
             break;
-        case 2:
+        case '2':
             AfficherLaListeDeLesJoueur();
             break;
-        case 3:
+        case '3':
             RechercheUnJoueur();
             break;
-        case 4:
+        case '4':
             ModifierUnJoueur();
             break;
         default:
+            printf("AU REVOIR !");
             break;
         }
     } while (choix != 0);
