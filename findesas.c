@@ -581,6 +581,16 @@ void Statistiques(){
             } 
         }   
     }
+
+    else if (choixStatistiques == 4)
+    {
+        trieParOrderAge(); 
+        printf("****** L E  P L U S  J E U N E  E S T  L E  P L U S  A G E ******\n");
+        printf("=== le joueur le plus jeune === \n ==> %s", Joueurs[0].nom);
+        printf("\n=== le joueur le plus age === \n ==> %s", Joueurs[NombreDeJoueurs - 1].nom);
+        
+    }
+    
     
     printf("\nappuyez sur entree pour retourne a menu...");
     getchar();
@@ -598,14 +608,16 @@ int main(){
     do
     {
 
-        printf(" =============== M E N U ============= \n");
-        printf("| 1. pour ajouter un joueur           |\n");
-        printf("| 2. pour afficher liste des joueurs  |\n");
-        printf("| 3. pour recherche un joueur         |\n");
-        printf("| 4. pour modifier un joueur          |\n");
-        printf("| 5. pour supprimer un joueur         |\n");
-        printf("| 6. pour les statistiques            |\n");
-        printf(" ===================================== \n");
+        printf(" =============== M E N U  P R I N C I P A L =============== \n");
+        printf("|                                                          |\n");
+        printf("|   1. pour ajouter un joueur                              |\n");
+        printf("|   2. pour afficher liste des joueurs                     |\n");
+        printf("|   3. pour recherche un joueur                            |\n");
+        printf("|   4. pour modifier un joueur                             |\n");
+        printf("|   5. pour supprimer un joueur                            |\n");
+        printf("|   6. pour les statistiques                               |\n");
+        printf("|                                                          |\n");
+        printf(" ========================================================== \n");
         printf("==> Entrer votre choix : ");
         scanf("%d", &choix);
 
