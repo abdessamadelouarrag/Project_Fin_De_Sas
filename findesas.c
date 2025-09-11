@@ -28,7 +28,6 @@ struct InfoDeJoueur Joueurs[100] = {
 };
 
 int nextid = 11;
-
 int NombreDeJoueurs = 10;
 
 void clearscreen()
@@ -55,9 +54,38 @@ void AjouterUnJoueur()
     printf("Entrer l\'age de joueur : \n");
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].age);
-    printf("Entrer numero de maillot : \n");
+
+    //verifier age de joueur 
+    while (Joueurs[NombreDeJoueurs].age > 58 || Joueurs[NombreDeJoueurs].age < 16)
+    {
+        if (Joueurs[NombreDeJoueurs].age > 58)
+        {
+            printf("Etes-vous Kazuyoshi Miura !! \n");
+            printf("Entrer l\'age de joueur : \n");
+            printf("=> ");
+            scanf(" %d", &Joueurs[NombreDeJoueurs].age);
+        }
+        else{
+            printf("Le joueur est tres jeune !! \n");
+            printf("Entrer l\'age de joueur : \n");
+            printf("=> ");
+            scanf(" %d", &Joueurs[NombreDeJoueurs].age);
+        }
+    }
+    
+    printf("Entrer numero de maillot (1 - 99): \n");
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
+
+    // verifier numero de maillot (1 - 99)
+    while (Joueurs[NombreDeJoueurs].numeroMaillot > 99 || Joueurs[NombreDeJoueurs].numeroMaillot < 1)
+    {
+        printf("LE MAX C\'EST 99 ET LE MIN 1 !\n");
+        printf("Entrer numero de maillot (1 - 99): \n");
+        printf("=> ");
+        scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
+    }
+    
     printf("--> Entrer le poste de joureur : \n");
     printf("\t1. pour le gardien\n");
     printf("\t2. pour le defenseur\n");
@@ -68,42 +96,35 @@ void AjouterUnJoueur()
     scanf(" %d", &choixDePoste);
     getchar();
 
-    if (choixDePoste == 1)
-    {
-        char gardian[] = "gardien";
-        strcpy(Joueurs[NombreDeJoueurs].poste, gardian);
+    switch (choixDePoste) {
+        case 1:
+            strcpy(Joueurs[NombreDeJoueurs].poste, "gardien");
+            break;
+        case 2:
+            strcpy(Joueurs[NombreDeJoueurs].poste, "defenseur");
+            break;
+        case 3:
+            strcpy(Joueurs[NombreDeJoueurs].poste, "milieu");
+            break;
+        case 4:
+            strcpy(Joueurs[NombreDeJoueurs].poste, "attaquant");
+            break;
+        default:
+            printf("Choix invalide, poste par defaut 'inconnu'\n");
     }
-    else if (choixDePoste == 2)
-    {
-        char defonseur[] = "defenseur";
-        strcpy(Joueurs[NombreDeJoueurs].poste, defonseur);
-    }
-    else if (choixDePoste == 3)
-    {
-        char milieu[] = "milieu";
-        strcpy(Joueurs[NombreDeJoueurs].poste, milieu);
-    }
-    else if (choixDePoste == 4)
-    {
-        char attaquant[] = "attaquant";
-        strcpy(Joueurs[NombreDeJoueurs].poste, attaquant);
-    }
-    else
-        printf("Le Choix invalide ! \n");
 
     printf("Entrer Combien De Buts : ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].buts);
-
-    printf("tu a ajouter un joueur...\n");
-
-    printf("\nappuyez sur entree pour retourne a menu...");
-    getchar();
-    getchar();
-
+    
     Joueurs[NombreDeJoueurs].id = nextid;
     nextid++;
-
     NombreDeJoueurs++;
+
+    printf("Joueur ajoute avec succes.\n");
+
+    printf("\nappuyez sur entree pour retourner au menu...");
+    getchar();
+    getchar();
 
     clearscreen();
 }
@@ -145,14 +166,12 @@ void ChoixDajouterJoueur()
 // fonction de tri par order alphabet
 void trieParOrderAlphabet()
 {
-
     struct InfoDeJoueur temp;
-
     // tri par order alphabe
 
-    for (int i = 0; i < NombreDeJoueurs; i++)
+    for (int i = 0; i < NombreDeJoueurs - 1; i++)
     {
-        for (int j = 0; j < NombreDeJoueurs - 1; j++)
+        for (int j = 0; j < NombreDeJoueurs - i - 1; j++)
         {
             if (strcmp(Joueurs[j].nom, Joueurs[j + 1].nom) > 0)
             {
@@ -167,9 +186,6 @@ void trieParOrderAlphabet()
 // fonction de tri par order d'age
 void trieParOrderAge()
 {
-
-    clearscreen();
-
     struct InfoDeJoueur temp;
 
     for (int i = 0; i < NombreDeJoueurs; i++)
@@ -199,7 +215,7 @@ void AfficherLaListeDeLesJoueur()
     printf("1. Trier les joueurs par ordre alphabetique (Nom)\n");
     printf("2. Trier les joueurs par age\n");
     printf("3. Afficher les joueurs par poste\n");
-    printf("Entrer le choix :");
+    printf("Votre choix : ");
     scanf(" %d", &choixDeTrie);
 
     clearscreen();
@@ -344,7 +360,7 @@ void AfficherLaListeDeLesJoueur()
             }
         }
     }
-    printf("\nappuyez sur entree pour retourne a menu...");
+    printf("\nappuyez sur entree pour retourneer au menu...");
     getchar();
     getchar();
 
@@ -368,6 +384,7 @@ void RechercheUnJoueur()
     printf("2. Pour Rechercher un joueur par Identifiant\n");
     printf("Entrer votre choix :");
     scanf(" %d", &ChoixDeRecherche);
+    getchar();
 
     if (ChoixDeRecherche == 1)
     {
@@ -376,11 +393,11 @@ void RechercheUnJoueur()
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
-            if (strcmp(Joueurs[i].nom, nomPourRecherche) == 0)
+            if (strcasecmp(Joueurs[i].nom, nomPourRecherche) == 0)
             {
                 clearscreen();
 
-                printf("=== Le nom de joueur est trouve ===\n");
+                printf("=== Joueur Trouve ===\n");
                 printf("Id : %d\n", Joueurs[i].id);
                 printf("\nLe nom de joueur : %s\n", Joueurs[i].nom);
                 printf("Le prenom de joueur : %s\n", Joueurs[i].prenom);
@@ -397,7 +414,7 @@ void RechercheUnJoueur()
             printf("aucune joueur avec le nom de (%s) !\n", nomPourRecherche);
         }
     }
-    if (ChoixDeRecherche == 2)
+    else if (ChoixDeRecherche == 2)
     {
         printf("Entrer Id de joueur : ");
         scanf(" %d", &idrecherche);
@@ -408,7 +425,7 @@ void RechercheUnJoueur()
             {
                 clearscreen();
 
-                printf("=== le joueur est trouve ===\n");
+                printf("=== Joueur Trouve ===\n");
                 printf("Id : %d\n", Joueurs[i].id);
                 printf("\nLe nom de joueur : %s\n", Joueurs[i].nom);
                 printf("Le prenom de joueur : %s\n", Joueurs[i].prenom);
@@ -418,6 +435,7 @@ void RechercheUnJoueur()
                 printf("Nombre de buts : %d\n", Joueurs[i].buts);
                 printf("\n");
                 idfound = 1;
+                break;
             }
         }
         if (idfound != 1)
@@ -425,8 +443,11 @@ void RechercheUnJoueur()
             printf("aucune joueur avec id de (%d)\n", idrecherche);
         }
     }
+    else{
+        printf("Choix invalide.\n");
+    }
 
-    printf("\nappuyez sur entree pour retourne a menu...");
+    printf("\nappuyez sur entree pour retourner au menu...");
     getchar();
     getchar();
 
@@ -443,6 +464,7 @@ void ModifierUnJoueur()
 
     printf("Entrer le nom de joueur : \n");
     scanf(" %s", nomRecherche);
+    getchar();
 
     for (int i = 0; i < NombreDeJoueurs; i++)
     {
@@ -451,6 +473,7 @@ void ModifierUnJoueur()
             printf("=== le joueur existe ===\n");
             printf("Modifier le poste d\'un joueur (O = oui / N = non) :");
             scanf(" %c", &ouiNon);
+            getchar();
 
             if (ouiNon == 'o' || ouiNon == 'O')
             {
@@ -461,50 +484,53 @@ void ModifierUnJoueur()
                 printf("Entrer Le Choix De poste :\n");
                 printf("=> ");
                 scanf(" %d", &modifierPosteJoueur);
+                getchar();
 
-                if (modifierPosteJoueur == 1)
-                {
-                    strcpy(Joueurs[i].poste, "gardien");
+                switch (modifierPosteJoueur) {
+                case 1: 
+                    strcpy(Joueurs[i].poste, "gardien"); 
+                    break;
+                case 2:
+                    strcpy(Joueurs[i].poste, "defenseur"); 
+                    break;
+                case 3: 
+                    strcpy(Joueurs[i].poste, "milieu"); 
+                    break;
+                case 4: 
+                    strcpy(Joueurs[i].poste, "attaquant"); 
+                    break;
+                default: 
+                    printf("Choix invalide, poste non modifié.\n");
                 }
-                else if (modifierPosteJoueur == 2)
-                {
-                    strcpy(Joueurs[i].poste, "defenseur");
-                }
-                else if (modifierPosteJoueur == 3)
-                {
-                    strcpy(Joueurs[i].poste, "milieu");
-                }
-                else if (modifierPosteJoueur == 4)
-                {
-                    strcpy(Joueurs[i].poste, "attaquant");
-                }
-                else
-                    printf("Choix invalid ! \n");
             }
 
             printf("Modifier l\'age d\'un joueur (O = oui / N = non) :");
             scanf(" %c", &ouiNon);
+            getchar();
 
             if (ouiNon == 'o' || ouiNon == 'O')
             {
                 printf("Entrer Nouvelle Age :");
                 scanf(" %d", &Joueurs[i].age);
+                getchar();
             }
 
             printf("Modifier le nombre de buts marques par un  (O = oui / N = non) :");
             scanf(" %c", &ouiNon);
+            getchar();
 
             if (ouiNon == 'o' || ouiNon == 'O')
             {
                 printf("Entrer Nouveau Nombre De Buts :");
                 scanf(" %d", &Joueurs[i].buts);
+                getchar();
             }
 
-            printf("tu a modifier un joueur\n");
-
+            printf("Joueur modifié avec succès.\n");
             printf("appuyez sur entre...");
             getchar();
             getchar();
+            break; //fin boucle après modification
         }
     }
     clearscreen();
@@ -520,39 +546,36 @@ void SupprimerUnJoueur()
 
     printf("Entrer id de joueur pour supprimer : ");
     scanf(" %d", &idsupprimer);
+    getchar();
 
     for (int i = 0; i < NombreDeJoueurs; i++)
     {
         if (idsupprimer == Joueurs[i].id)
         {
-            printf("! Vraiment tu va supprimer le joueur !\n");
-            printf("O = oui / N = non : ");
+            printf("! Vraiment tu va supprimer le joueur ? (O = oui / N = non) : \n");
             scanf(" %c", &ouiNon);
+            getchar();
 
             if (ouiNon == 'O' || ouiNon == 'o')
             {
-                for (int i = 0; i < NombreDeJoueurs; i++)
+                for (int j = i; j < NombreDeJoueurs - 1; j++)
                 {
-                    if (Joueurs[i].id == idsupprimer)
-                    {
-                        for (int j = i; j < NombreDeJoueurs - 1; j++)
-                        {
-                            Joueurs[j] = Joueurs[j + 1];
-                        }
-                        foundsupprimer = 1;
-                    }
+                    Joueurs[j] = Joueurs[j + 1];
                 }
-                printf("tu a supprimer un joueur \n");
+                NombreDeJoueurs--;
+                foundsupprimer = 1;
+                printf("Joueur supprime\n");
             }
-            NombreDeJoueurs--;
+            break;
         }
     }
+
     if (foundsupprimer != 1)
     {
         printf("Aucun Joueur Avec Id (%d)", idsupprimer);
     }
 
-    printf("\nappuyez sur entre...");
+    printf("Appuyez sur entree pour retourner au menu...");
     getchar();
     getchar();
 }
@@ -574,8 +597,9 @@ void Statistiques()
     printf("2. Afficher l\'age moyen des joueurs\n");
     printf("3. Afficher les joueurs ayant marque plus de buts \n");
     printf("4. Afficher le joueur le plus jeune et le plus age \n");
-    printf("=> Entrer Le Choix : ");
+    printf("=> Votre Choix : ");
     scanf(" %d", &choixStatistiques);
+    getchar();
 
     if (choixStatistiques == 1)
     {
@@ -605,12 +629,13 @@ void Statistiques()
 
         printf("==== Afficher les joueurs ayant marque plus ====\n");
 
-        printf("Entrer Combien De Buts : ");
+        printf("Entrer le nombre de buts pour filtrer : ");
         scanf(" %d", &choixDeButs);
+        printf("Joueurs ayant marqué plus de %d buts :\n", choixDeButs);
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
-            if (Joueurs[i].buts > choixDeButs)
+           if (Joueurs[i].buts > choixDeButs)
             {
                 printf("=====================================\n");
                 printf("Id : %d\n", Joueurs[i].id);
@@ -626,13 +651,22 @@ void Statistiques()
 
     else if (choixStatistiques == 4)
     {
-        trieParOrderAge();
-        printf("****** L E  P L U S  J E U N E  E S T  L E  P L U S  A G E ******\n");
-        printf("=== le joueur le plus jeune === \n ==> %s", Joueurs[0].nom);
-        printf("\n=== le joueur le plus age === \n ==> %s", Joueurs[NombreDeJoueurs - 1].nom);
+        if (NombreDeJoueurs > 0)
+        {
+            trieParOrderAge();
+            printf("****** L E  P L U S  J E U N E  E S T  L E  P L U S  A G E ******\n");
+            printf("=== le joueur le plus jeune === \n ==> %s", Joueurs[0].nom);
+            printf("\n=== le joueur le plus age === \n ==> %s", Joueurs[NombreDeJoueurs - 1].nom);
+        }
+        else if (NombreDeJoueurs == 0)
+        {
+            printf("Aucun joueur dans l\'equipe.\n");
+        }
+        else
+        printf("Choix invalide.\n");
     }
 
-    printf("\nappuyez sur entree pour retourne a menu...");
+    printf("\nappuyez sur entree pour retourner au menu...");
     getchar();
     getchar();
 
@@ -649,8 +683,9 @@ int Quiter()
 
     printf("===== Q U I T E R =====\n");
 
-    printf("tu va de quiter (O = oui / N = non) : ");
+    printf("Voulez-vous vraiment quitter ?  (O = oui / N = non) : ");
     scanf(" %c", &ConfQuiter);
+    getchar();
 
     if (ConfQuiter == 'o' || ConfQuiter == 'O')
     {
@@ -668,8 +703,7 @@ int Quiter()
         printf("* * * Bienvenu A Nouveau * * *\n");
         printf("\n");
 
-        printf("\nappuyez sur entree pour retourne a menu...");
-        getchar();
+        printf("\nappuyez sur entree pour retourner au menu...");
         getchar();
 
         clearscreen();
@@ -701,7 +735,8 @@ int main()
         printf("|                                                          |\n");
         printf(" ========================================================== \n");
         printf("==> Entrer votre choix : ");
-        scanf("%d", &choix);
+        scanf(" %d", &choix);
+        getchar();
 
         switch (choix)
         {
@@ -726,10 +761,11 @@ int main()
         case 0:
             if (Quiter() == 1)
             {
-                choix = -1;
+                choix = 0; // pour sortir de la boucle
             }
+            break;
         default:
-            // printf("le choix invalide !!");
+            printf("Choix invalide, veuillez reessayer.\n");
             break;
         }
     } while (choix != 0);
