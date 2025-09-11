@@ -446,8 +446,41 @@ void ModifierUnJoueur(){
                 printf("Entrer Nouveau Nombre De Buts :");
                 scanf(" %d", &Joueurs[i].buts);
             }
+
+            printf("tu a modifier un joueur\n");
+
+            printf("appuyez sur entre...");
+            getchar();
+            getchar();
         }
     }
+    clearscreen();
+}
+
+void SupprimerUnJoueur(){
+
+    int idsupprimer;
+    int foundsupprimer = 0;
+
+    printf("Entrer id de joueur pour supprimer : ");
+    scanf(" %d", &idsupprimer);
+
+    for (int i = 0; i < NombreDeJoueurs; i++)
+    {
+        if (Joueurs[i].id == idsupprimer)
+        {
+            for (int j = i; j < NombreDeJoueurs - 1; j++)
+            {
+            
+            }
+            
+            foundsupprimer = 1;
+
+        }
+            
+        
+    }
+    
 }
 int main(){
 
