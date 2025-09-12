@@ -47,10 +47,10 @@ void AjouterUnJoueur()
     printf("===== Ajouter un joueur =====\n");
     printf("Entrer le nom de joueur \n");
     printf("=> ");
-    scanf(" %s", Joueurs[NombreDeJoueurs].nom);
+    scanf(" %[^\n]", Joueurs[NombreDeJoueurs].nom);
     printf("Entrer le prenom de joueur :\n");
     printf("=> ");
-    scanf(" %s", Joueurs[NombreDeJoueurs].prenom);
+    scanf(" %[^\n]", Joueurs[NombreDeJoueurs].prenom);
     printf("Entrer l\'age de joueur : \n");
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].age);
@@ -60,7 +60,7 @@ void AjouterUnJoueur()
     {
         if (Joueurs[NombreDeJoueurs].age > 58)
         {
-            printf("Etes-vous Kazuyoshi Miura !! \n");
+            printf("Le joueur est plus age !! \n");
             printf("Entrer l\'age de joueur : \n");
             printf("=> ");
             scanf(" %d", &Joueurs[NombreDeJoueurs].age);
@@ -112,7 +112,7 @@ void AjouterUnJoueur()
         strcpy(Joueurs[NombreDeJoueurs].poste, "attaquant");
         break;
     default:
-        printf("Choix invalide, poste par defaut 'inconnu'\n");
+        printf("Choix invalide, poste 'inconnu'\n");
     }
 
     printf("Entrer Combien De Buts : ");
@@ -219,6 +219,7 @@ void AfficherLaListeDeLesJoueur()
     printf("3. Afficher les joueurs par poste\n");
     printf("Votre choix : ");
     scanf(" %d", &choixDeTrie);
+    getchar();
 
     clearscreen();
 
@@ -273,6 +274,7 @@ void AfficherLaListeDeLesJoueur()
         printf("4. Pou afficher les attaquant  \n");
         printf("Entrer le choix de poste : ");
         scanf(" %d", &choixDePoste);
+        getchar();
 
         if (choixDePoste == 1)
         {
@@ -364,7 +366,6 @@ void AfficherLaListeDeLesJoueur()
     }
     printf("\nappuyez sur entree pour retourneer au menu...");
     getchar();
-    getchar();
 
     clearscreen();
 }
@@ -391,7 +392,7 @@ void RechercheUnJoueur()
     if (ChoixDeRecherche == 1)
     {
         printf("=> Entrer le nom de joueur : ");
-        scanf(" %s", nomPourRecherche);
+        scanf(" %[^\n]", nomPourRecherche);
         getchar();
 
         for (int i = 0; i < NombreDeJoueurs; i++)
@@ -467,7 +468,7 @@ void ModifierUnJoueur()
     int modifierPosteJoueur;
 
     printf("Entrer le nom de joueur : \n");
-    scanf(" %s", nomRecherche);
+    scanf(" %[^\n]", nomRecherche);
     getchar();
 
     for (int i = 0; i < NombreDeJoueurs; i++)
