@@ -449,7 +449,6 @@ void RechercheUnJoueur()
 
     printf("\nappuyez sur entree pour retourner au menu...");
     getchar();
-    getchar();
 
     clearscreen();
 }
@@ -529,7 +528,6 @@ void ModifierUnJoueur()
             printf("Joueur modifié avec succès.\n");
             printf("appuyez sur entre...");
             getchar();
-            getchar();
             break; //fin boucle après modification
         }
     }
@@ -577,7 +575,6 @@ void SupprimerUnJoueur()
 
     printf("Appuyez sur entree pour retourner au menu...");
     getchar();
-    getchar();
 }
 
 // fonction statistiques
@@ -597,6 +594,7 @@ void Statistiques()
     printf("2. Afficher l\'age moyen des joueurs\n");
     printf("3. Afficher les joueurs ayant marque plus de buts \n");
     printf("4. Afficher le joueur le plus jeune et le plus age \n");
+    printf("5. Afficher le meilleur buteur\n");
     printf("=> Votre Choix : ");
     scanf(" %d", &choixStatistiques);
     getchar();
@@ -665,9 +663,25 @@ void Statistiques()
         else
         printf("Choix invalide.\n");
     }
+    else if (choixStatistiques == 5)
+    {
+        int max = Joueurs[0].buts;
+        int indexMax = 0;
+
+        for (int i = 0; i < NombreDeJoueurs; i++)
+        {
+            if (Joueurs[i].buts > max)
+            {
+                max = Joueurs[i].buts;
+                indexMax = i; // met à jour l'index du joueur avec le plus de buts
+            }
+        }
+        printf("Le Joueur plus de buts : %d\n", Joueurs[indexMax].buts);
+        
+    }
+    
 
     printf("\nappuyez sur entree pour retourner au menu...");
-    getchar();
     getchar();
 
     clearscreen();
@@ -761,7 +775,7 @@ int main()
         case 0:
             if (Quiter() == 1)
             {
-                choix = 0; // pour sortir de la boucle
+                choix = 22; // pour sortir de la boucle
             }
             break;
         default:
