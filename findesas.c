@@ -97,6 +97,31 @@ void AjouterUnJoueur()
     scanf(" %d", &choixDePoste);
     getchar();
 
+    if (choixDePoste > 4 || choixDePoste < 1)
+    {
+        while (1)
+        {
+            printf("--> Entrer le poste de joureur : \n");
+            printf("\t1. pour le gardien\n");
+            printf("\t2. pour le defenseur\n");
+            printf("\t3. pour le milieu\n");
+            printf("\t4. pour le attaquant\n");
+            printf("Entrer Le Choix De poste :\n");
+            printf("=> ");
+            scanf(" %d", &choixDePoste);
+            getchar();
+
+            if (choixDePoste >= 1 && choixDePoste <= 4)
+            {
+                break;
+            }
+            else
+            printf("choix invalide !!");
+            
+        }
+    }
+    
+
     switch (choixDePoste)
     {
     case 1:
@@ -785,6 +810,7 @@ int main()
             }
             break;
         default:
+            clearscreen();
             printf("*** Choix invalide, veuillez reessayer ***\n");
             break;
         }
