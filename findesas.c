@@ -55,37 +55,9 @@ void AjouterUnJoueur()
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].age);
 
-    // verifier age de joueur
-    while (Joueurs[NombreDeJoueurs].age > 58 || Joueurs[NombreDeJoueurs].age < 16)
-    {
-        if (Joueurs[NombreDeJoueurs].age > 58)
-        {
-            printf("Le joueur est plus age !! \n");
-            printf("Entrer l\'age de joueur : \n");
-            printf("=> ");
-            scanf(" %d", &Joueurs[NombreDeJoueurs].age);
-        }
-        else
-        {
-            printf("Le joueur est tres jeune !! \n");
-            printf("Entrer l\'age de joueur : \n");
-            printf("=> ");
-            scanf(" %d", &Joueurs[NombreDeJoueurs].age);
-        }
-    }
-
-    printf("Entrer numero de maillot (1 - 99): \n");
+    printf("Entrer numero de maillot: \n");
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
-
-    // verifier numero de maillot (1 - 99)
-    while (Joueurs[NombreDeJoueurs].numeroMaillot > 99 || Joueurs[NombreDeJoueurs].numeroMaillot < 1)
-    {
-        printf("LE MAX C\'EST 99 ET LE MIN 1 !\n");
-        printf("Entrer numero de maillot (1 - 99): \n");
-        printf("=> ");
-        scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
-    }
 
     printf("--> Entrer le poste de joureur : \n");
     printf("\t1. pour le gardien\n");
@@ -97,30 +69,6 @@ void AjouterUnJoueur()
     scanf(" %d", &choixDePoste);
     getchar();
 
-    if (choixDePoste > 4 || choixDePoste < 1)
-    {
-        while (1)
-        {
-            printf("--> Entrer le poste de joureur : \n");
-            printf("\t1. pour le gardien\n");
-            printf("\t2. pour le defenseur\n");
-            printf("\t3. pour le milieu\n");
-            printf("\t4. pour le attaquant\n");
-            printf("Entrer Le Choix De poste :\n");
-            printf("=> ");
-            scanf(" %d", &choixDePoste);
-            getchar();
-
-            if (choixDePoste >= 1 && choixDePoste <= 4)
-            {
-                break;
-            }
-            else
-            printf("choix invalide !!");
-            
-        }
-    }
-    
 
     switch (choixDePoste)
     {
