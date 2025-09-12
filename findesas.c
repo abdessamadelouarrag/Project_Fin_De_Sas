@@ -55,7 +55,7 @@ void AjouterUnJoueur()
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].age);
 
-    //verifier age de joueur 
+    // verifier age de joueur
     while (Joueurs[NombreDeJoueurs].age > 58 || Joueurs[NombreDeJoueurs].age < 16)
     {
         if (Joueurs[NombreDeJoueurs].age > 58)
@@ -65,14 +65,15 @@ void AjouterUnJoueur()
             printf("=> ");
             scanf(" %d", &Joueurs[NombreDeJoueurs].age);
         }
-        else{
+        else
+        {
             printf("Le joueur est tres jeune !! \n");
             printf("Entrer l\'age de joueur : \n");
             printf("=> ");
             scanf(" %d", &Joueurs[NombreDeJoueurs].age);
         }
     }
-    
+
     printf("Entrer numero de maillot (1 - 99): \n");
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
@@ -85,7 +86,7 @@ void AjouterUnJoueur()
         printf("=> ");
         scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
     }
-    
+
     printf("--> Entrer le poste de joureur : \n");
     printf("\t1. pour le gardien\n");
     printf("\t2. pour le defenseur\n");
@@ -96,26 +97,27 @@ void AjouterUnJoueur()
     scanf(" %d", &choixDePoste);
     getchar();
 
-    switch (choixDePoste) {
-        case 1:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "gardien");
-            break;
-        case 2:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "defenseur");
-            break;
-        case 3:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "milieu");
-            break;
-        case 4:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "attaquant");
-            break;
-        default:
-            printf("Choix invalide, poste par defaut 'inconnu'\n");
+    switch (choixDePoste)
+    {
+    case 1:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "gardien");
+        break;
+    case 2:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "defenseur");
+        break;
+    case 3:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "milieu");
+        break;
+    case 4:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "attaquant");
+        break;
+    default:
+        printf("Choix invalide, poste par defaut 'inconnu'\n");
     }
 
     printf("Entrer Combien De Buts : ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].buts);
-    
+
     Joueurs[NombreDeJoueurs].id = nextid;
     nextid++;
     NombreDeJoueurs++;
@@ -390,6 +392,7 @@ void RechercheUnJoueur()
     {
         printf("=> Entrer le nom de joueur : ");
         scanf(" %s", nomPourRecherche);
+        getchar();
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
@@ -414,16 +417,18 @@ void RechercheUnJoueur()
             printf("aucune joueur avec le nom de (%s) !\n", nomPourRecherche);
         }
     }
+
     else if (ChoixDeRecherche == 2)
     {
         printf("Entrer Id de joueur : ");
         scanf(" %d", &idrecherche);
+        getchar();
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
-            if (Joueurs[i].id == idrecherche)
+            if (idrecherche == Joueurs[i].id)
             {
-                clearscreen();
+                // clearscreen();
 
                 printf("=== Joueur Trouve ===\n");
                 printf("Id : %d\n", Joueurs[i].id);
@@ -435,7 +440,6 @@ void RechercheUnJoueur()
                 printf("Nombre de buts : %d\n", Joueurs[i].buts);
                 printf("\n");
                 idfound = 1;
-                break;
             }
         }
         if (idfound != 1)
@@ -443,7 +447,8 @@ void RechercheUnJoueur()
             printf("aucune joueur avec id de (%d)\n", idrecherche);
         }
     }
-    else{
+    else
+    {
         printf("Choix invalide.\n");
     }
 
@@ -485,20 +490,21 @@ void ModifierUnJoueur()
                 scanf(" %d", &modifierPosteJoueur);
                 getchar();
 
-                switch (modifierPosteJoueur) {
-                case 1: 
-                    strcpy(Joueurs[i].poste, "gardien"); 
+                switch (modifierPosteJoueur)
+                {
+                case 1:
+                    strcpy(Joueurs[i].poste, "gardien");
                     break;
                 case 2:
-                    strcpy(Joueurs[i].poste, "defenseur"); 
+                    strcpy(Joueurs[i].poste, "defenseur");
                     break;
-                case 3: 
-                    strcpy(Joueurs[i].poste, "milieu"); 
+                case 3:
+                    strcpy(Joueurs[i].poste, "milieu");
                     break;
-                case 4: 
-                    strcpy(Joueurs[i].poste, "attaquant"); 
+                case 4:
+                    strcpy(Joueurs[i].poste, "attaquant");
                     break;
-                default: 
+                default:
                     printf("Choix invalide, poste non modifié.\n");
                 }
             }
@@ -528,7 +534,7 @@ void ModifierUnJoueur()
             printf("Joueur modifié avec succès.\n");
             printf("appuyez sur entre...");
             getchar();
-            break; //fin boucle après modification
+            break; // fin boucle après modification
         }
     }
     clearscreen();
@@ -633,7 +639,7 @@ void Statistiques()
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
-           if (Joueurs[i].buts > choixDeButs)
+            if (Joueurs[i].buts > choixDeButs)
             {
                 printf("=====================================\n");
                 printf("Id : %d\n", Joueurs[i].id);
@@ -661,7 +667,7 @@ void Statistiques()
             printf("Aucun joueur dans l\'equipe.\n");
         }
         else
-        printf("Choix invalide.\n");
+            printf("Choix invalide.\n");
     }
     else if (choixStatistiques == 5)
     {
@@ -676,10 +682,9 @@ void Statistiques()
                 indexMax = i; // met à jour l'index du joueur avec le plus de buts
             }
         }
-        printf("Le Joueur plus de buts : %d\n", Joueurs[indexMax].buts);
-        
+        printf("le meilleur buteur est : %s \n", Joueurs[indexMax].nom);
+        printf("total de buts marque : %d \n", Joueurs[indexMax].buts);
     }
-    
 
     printf("\nappuyez sur entree pour retourner au menu...");
     getchar();
@@ -779,7 +784,7 @@ int main()
             }
             break;
         default:
-            printf("Choix invalide, veuillez reessayer.\n");
+            printf("*** Choix invalide, veuillez reessayer ***\n");
             break;
         }
     } while (choix != 0);
