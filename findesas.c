@@ -2,6 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+//color 
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 struct InfoDeJoueur
 {
     int id;
@@ -44,18 +53,18 @@ void AjouterUnJoueur()
 
     int choixDePoste;
 
-    printf("===== Ajouter un joueur =====\n");
-    printf("Entrer le nom de joueur \n");
+    printf("===== A J O U T E R  U N  J O U E U R =====\n");
+    printf("\nEntrer le nom de joueur \n");
     printf("=> ");
-    scanf(" %s", Joueurs[NombreDeJoueurs].nom);
+    scanf(" %[^\n]", Joueurs[NombreDeJoueurs].nom);
     printf("Entrer le prenom de joueur :\n");
     printf("=> ");
-    scanf(" %s", Joueurs[NombreDeJoueurs].prenom);
+    scanf(" %[^\n]", Joueurs[NombreDeJoueurs].prenom);
     printf("Entrer l\'age de joueur : \n");
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].age);
 
-    //verifier age de joueur 
+    // verifier age de joueur
     while (Joueurs[NombreDeJoueurs].age > 58 || Joueurs[NombreDeJoueurs].age < 16)
     {
         if (Joueurs[NombreDeJoueurs].age > 58)
@@ -65,27 +74,51 @@ void AjouterUnJoueur()
             printf("=> ");
             scanf(" %d", &Joueurs[NombreDeJoueurs].age);
         }
-        else{
+        else if (Joueurs[NombreDeJoueurs].age < 1)
+        {
+            printf("!!!! aga invalide !!!!\n");
+            printf("Entrer l\'age de joueur : \n");
+            printf("=> ");
+            scanf(" %d", &Joueurs[NombreDeJoueurs].age);
+        }
+
+        else
+        {
             printf("Le joueur est tres jeune !! \n");
             printf("Entrer l\'age de joueur : \n");
             printf("=> ");
             scanf(" %d", &Joueurs[NombreDeJoueurs].age);
         }
     }
-    
-    printf("Entrer numero de maillot (1 - 99): \n");
-    printf("=> ");
-    scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
 
-    // verifier numero de maillot (1 - 99)
-    while (Joueurs[NombreDeJoueurs].numeroMaillot > 99 || Joueurs[NombreDeJoueurs].numeroMaillot < 1)
+    int numeroexiste;
+
+    do
     {
-        printf("LE MAX C\'EST 99 ET LE MIN 1 !\n");
+        numeroexiste = 0;
+
         printf("Entrer numero de maillot (1 - 99): \n");
         printf("=> ");
         scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
-    }
     
+        for (int i = 0; i < NombreDeJoueurs; i++)
+        {
+            if (Joueurs[NombreDeJoueurs].numeroMaillot == Joueurs[i].numeroMaillot)
+            {
+                printf("il ya un maillot avec se numero !!\n");
+                numeroexiste = 1;
+                break;
+            }
+            else if (Joueurs[NombreDeJoueurs].numeroMaillot < 1)
+            {
+               printf("invalide !!!");
+            }
+            
+        }
+
+    } while (numeroexiste);
+    
+    menu1:
     printf("--> Entrer le poste de joureur : \n");
     printf("\t1. pour le gardien\n");
     printf("\t2. pour le defenseur\n");
@@ -96,31 +129,33 @@ void AjouterUnJoueur()
     scanf(" %d", &choixDePoste);
     getchar();
 
-    switch (choixDePoste) {
-        case 1:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "gardien");
-            break;
-        case 2:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "defenseur");
-            break;
-        case 3:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "milieu");
-            break;
-        case 4:
-            strcpy(Joueurs[NombreDeJoueurs].poste, "attaquant");
-            break;
-        default:
-            printf("Choix invalide, poste par defaut 'inconnu'\n");
+    switch (choixDePoste)
+    {
+    case 1:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "gardien");
+        break;
+    case 2:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "defenseur");
+        break;
+    case 3:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "milieu");
+        break;
+    case 4:
+        strcpy(Joueurs[NombreDeJoueurs].poste, "attaquant");
+        break;
+    default:
+        printf("Choix invalide, poste par defaut 'inconnu'\n");
+        goto menu1;
     }
 
     printf("Entrer Combien De Buts : ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].buts);
-    
+
     Joueurs[NombreDeJoueurs].id = nextid;
     nextid++;
     NombreDeJoueurs++;
 
-    printf("Joueur ajoute avec succes.\n");
+    printf(ANSI_COLOR_GREEN "+++ Joueur ajoute avec succes +++\n" ANSI_COLOR_RESET);
 
     printf("\nappuyez sur entree pour retourner au menu...");
     getchar();
@@ -138,11 +173,13 @@ void ChoixDajouterJoueur()
     int choixDajouter;
     int CombienDeJoueur;
 
-    printf("==== Le choix d\'ajouter ====\n");
-
-    printf("1. pour un nouveau joueur \n");
-    printf("2. pour ajouter plusieurs joueurs \n");
-    printf("Entrer le choix 1 ou 2 : ");
+    printf(ANSI_COLOR_GREEN"========= Le choix d\'ajouter ========\n"ANSI_COLOR_RESET);
+    printf("|                                    |\n");
+    printf("| 1. pour un nouveau joueur          |\n");
+    printf("| 2. pour ajouter plusieurs joueurs  |\n");
+    printf("|                                    |\n");
+    printf(ANSI_COLOR_GREEN"======================================\n"ANSI_COLOR_RESET);
+    printf("=> Entrer le choix 1 ou 2 : ");
     scanf(" %d", &choixDajouter);
     getchar();
 
@@ -211,11 +248,12 @@ void AfficherLaListeDeLesJoueur()
     int choixDeTrie;
     int choixDePoste;
 
-    printf("======== Afficher les joueurs ========\n");
-    printf("1. Trier les joueurs par ordre alphabetique (Nom)\n");
-    printf("2. Trier les joueurs par age\n");
-    printf("3. Afficher les joueurs par poste\n");
-    printf("Votre choix : ");
+    printf(ANSI_COLOR_BLUE"============= A F F I C H E R  L E S  J O U E U R S =============\n\n"ANSI_COLOR_RESET);
+    printf("| 1. Trier les joueurs par ordre alphabetique (Nom)             |\n");
+    printf("| 2. Trier les joueurs par age                                  |\n");
+    printf("| 3. Afficher les joueurs par poste                             |\n\n");
+    printf(ANSI_COLOR_BLUE"=================================================================\n"ANSI_COLOR_RESET);
+    printf("=> Votre choix : ");
     scanf(" %d", &choixDeTrie);
 
     clearscreen();
@@ -265,7 +303,7 @@ void AfficherLaListeDeLesJoueur()
     else if (choixDeTrie == 3)
     {
         printf("==== L E  C H O I X  D E  P O S T E ====\n");
-        printf("1. Pour afficher les gardiens  \n");
+        printf("\n1. Pour afficher les gardiens  \n");
         printf("2. Pour afficher les defenseurs  \n");
         printf("3. Pour afficher les mileus  \n");
         printf("4. Pou afficher les attaquant  \n");
@@ -360,7 +398,7 @@ void AfficherLaListeDeLesJoueur()
             }
         }
     }
-    printf("\nappuyez sur entree pour retourneer au menu...");
+    printf(ANSI_COLOR_RED"\nappuyez sur entree pour retourneer au menu..."ANSI_COLOR_RESET);
     getchar();
     getchar();
 
@@ -379,9 +417,10 @@ void RechercheUnJoueur()
     int found = 0;
     int idfound = 0;
 
-    printf("==== L E  C H O I X  D E  R E C H E R C H E ====\n");
-    printf("1. Pour Rechercher un joueur par Nom\n");
-    printf("2. Pour Rechercher un joueur par Identifiant\n");
+    printf(ANSI_COLOR_MAGENTA"==== L E  C H O I X  D E  R E C H E R C H E ====\n\n");
+    printf("| 1. Pour Rechercher un joueur par Nom         |\n");
+    printf("| 2. Pour Rechercher un joueur par Identifiant |\n\n");
+    printf("================================================\n"ANSI_COLOR_RESET);
     printf("Entrer votre choix :");
     scanf(" %d", &ChoixDeRecherche);
     getchar();
@@ -389,7 +428,8 @@ void RechercheUnJoueur()
     if (ChoixDeRecherche == 1)
     {
         printf("=> Entrer le nom de joueur : ");
-        scanf(" %s", nomPourRecherche);
+        scanf(" %[^\n]", nomPourRecherche);
+        getchar();
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
@@ -418,6 +458,7 @@ void RechercheUnJoueur()
     {
         printf("Entrer Id de joueur : ");
         scanf(" %d", &idrecherche);
+        getchar();
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
@@ -443,11 +484,12 @@ void RechercheUnJoueur()
             printf("aucune joueur avec id de (%d)\n", idrecherche);
         }
     }
-    else{
+    else
+    {
         printf("Choix invalide.\n");
     }
 
-    printf("\nappuyez sur entree pour retourner au menu...");
+    printf(ANSI_COLOR_RED"\nappuyez sur entree pour retourneer au menu..."ANSI_COLOR_RESET);
     getchar();
 
     clearscreen();
@@ -457,19 +499,23 @@ void RechercheUnJoueur()
 void ModifierUnJoueur()
 {
 
+    clearscreen();
+
     char nomRecherche[100];
     char ouiNon;
     int modifierPosteJoueur;
+    int found = 0;
 
-    printf("Entrer le nom de joueur : \n");
-    scanf(" %s", nomRecherche);
+    printf(ANSI_COLOR_YELLOW"======= M O D I F I E R  U N  J O U E U R =======\n"ANSI_COLOR_RESET);
+    printf("=> Entrer le nom de joueur : \n");
+    scanf(" %[^\n]", nomRecherche);
     getchar();
 
     for (int i = 0; i < NombreDeJoueurs; i++)
     {
         if (strcmp(Joueurs[i].nom, nomRecherche) == 0)
         {
-            printf("=== le joueur existe ===\n");
+            printf(ANSI_COLOR_GREEN"=== le joueur existe ===\n"ANSI_COLOR_RESET);
             printf("Modifier le poste d\'un joueur (O = oui / N = non) :");
             scanf(" %c", &ouiNon);
             getchar();
@@ -485,21 +531,22 @@ void ModifierUnJoueur()
                 scanf(" %d", &modifierPosteJoueur);
                 getchar();
 
-                switch (modifierPosteJoueur) {
-                case 1: 
-                    strcpy(Joueurs[i].poste, "gardien"); 
+                switch (modifierPosteJoueur)
+                {
+                case 1:
+                    strcpy(Joueurs[i].poste, "gardien");
                     break;
                 case 2:
-                    strcpy(Joueurs[i].poste, "defenseur"); 
+                    strcpy(Joueurs[i].poste, "defenseur");
                     break;
-                case 3: 
-                    strcpy(Joueurs[i].poste, "milieu"); 
+                case 3:
+                    strcpy(Joueurs[i].poste, "milieu");
                     break;
-                case 4: 
-                    strcpy(Joueurs[i].poste, "attaquant"); 
+                case 4:
+                    strcpy(Joueurs[i].poste, "attaquant");
                     break;
-                default: 
-                    printf("Choix invalide, poste non modifié.\n");
+                default:
+                    printf("Choix invalide, poste non modifie.\n");
                 }
             }
 
@@ -525,12 +572,22 @@ void ModifierUnJoueur()
                 getchar();
             }
 
-            printf("Joueur modifié avec succès.\n");
-            printf("appuyez sur entre...");
+            printf("Joueur modifie avec succes.\n");
+            found = 1;
+            printf(ANSI_COLOR_RED"\nappuyez sur entree pour retourneer au menu..."ANSI_COLOR_RESET);
             getchar();
-            break; //fin boucle après modification
+            break; // fin boucle après modification
         }
     }
+
+    if(found != 1)
+    {
+        printf(ANSI_COLOR_RED"!!! aucune joueur avec le nom (%s)"ANSI_COLOR_RESET, nomRecherche);
+    }
+    
+    printf(ANSI_COLOR_RED"\nappuyez sur entree pour retourneer au menu..."ANSI_COLOR_RESET);
+    getchar();
+
     clearscreen();
 }
 
@@ -538,11 +595,14 @@ void ModifierUnJoueur()
 void SupprimerUnJoueur()
 {
 
+    clearscreen();
+
     int idsupprimer;
     int foundsupprimer = 0;
     char ouiNon;
 
-    printf("Entrer id de joueur pour supprimer : ");
+    printf(ANSI_COLOR_MAGENTA"====== S u p p r i m e r  U n  J o u e u r ======\n"ANSI_COLOR_RESET);
+    printf("=> Entrer id de joueur pour supprimer : ");
     scanf(" %d", &idsupprimer);
     getchar();
 
@@ -550,7 +610,7 @@ void SupprimerUnJoueur()
     {
         if (idsupprimer == Joueurs[i].id)
         {
-            printf("! Vraiment tu va supprimer le joueur ? (O = oui / N = non) : \n");
+            printf(ANSI_COLOR_RED"! Vraiment tu va supprimer le joueur ? (O = oui / N = non) : \n"ANSI_COLOR_RESET);
             scanf(" %c", &ouiNon);
             getchar();
 
@@ -562,9 +622,10 @@ void SupprimerUnJoueur()
                 }
                 NombreDeJoueurs--;
                 foundsupprimer = 1;
-                printf("Joueur supprime\n");
+                printf(ANSI_COLOR_RED"Joueur supprime\n"ANSI_COLOR_RESET);
+
+                break;
             }
-            break;
         }
     }
 
@@ -573,8 +634,10 @@ void SupprimerUnJoueur()
         printf("Aucun Joueur Avec Id (%d)", idsupprimer);
     }
 
-    printf("Appuyez sur entree pour retourner au menu...");
+    printf(ANSI_COLOR_RED"\nappuyez sur entree pour retourneer au menu..."ANSI_COLOR_RESET);
     getchar();
+
+    clearscreen();
 }
 
 // fonction statistiques
@@ -588,13 +651,14 @@ void Statistiques()
     int ageMoyen;
     int choixDeButs;
 
-    printf("===== S T A T I S T I Q U E S =====\n");
-
-    printf("1. Afficher le nombre total de joueurs dans l\'equipe\n");
-    printf("2. Afficher l\'age moyen des joueurs\n");
-    printf("3. Afficher les joueurs ayant marque plus de buts \n");
-    printf("4. Afficher le joueur le plus jeune et le plus age \n");
-    printf("5. Afficher le meilleur buteur\n");
+    printf(ANSI_COLOR_GREEN"================= S T A T I S T I Q U E S =================\n\n"ANSI_COLOR_RESET);
+    printf("| 1. Afficher le nombre total de joueurs dans l\'equipe    |\n");
+    printf("| 2. Afficher l\'age moyen des joueurs                     |\n");
+    printf("| 3. Afficher les joueurs ayant marque plus de buts       |\n");
+    printf("| 4. Afficher le joueur le plus jeune et le plus age      |\n");
+    printf("| 5. Afficher le meilleur buteur                          |\n");
+    printf("| 0. quite les statistiques                               |\n\n");
+    printf(ANSI_COLOR_GREEN"===========================================================\n"ANSI_COLOR_RESET);
     printf("=> Votre Choix : ");
     scanf(" %d", &choixStatistiques);
     getchar();
@@ -633,7 +697,7 @@ void Statistiques()
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
-           if (Joueurs[i].buts > choixDeButs)
+            if (Joueurs[i].buts > choixDeButs)
             {
                 printf("=====================================\n");
                 printf("Id : %d\n", Joueurs[i].id);
@@ -661,7 +725,7 @@ void Statistiques()
             printf("Aucun joueur dans l\'equipe.\n");
         }
         else
-        printf("Choix invalide.\n");
+            printf("Choix invalide.\n");
     }
     else if (choixStatistiques == 5)
     {
@@ -677,9 +741,7 @@ void Statistiques()
             }
         }
         printf("Le Joueur plus de buts : %d\n", Joueurs[indexMax].buts);
-        
     }
-    
 
     printf("\nappuyez sur entree pour retourner au menu...");
     getchar();
@@ -695,9 +757,9 @@ int Quiter()
 
     clearscreen();
 
-    printf("===== Q U I T E R =====\n");
+    printf(ANSI_COLOR_RED"===== Q U I T E R =====\n");
 
-    printf("Voulez-vous vraiment quitter ?  (O = oui / N = non) : ");
+    printf("Voulez-vous vraiment quitter ?  (O = oui / N = non) : "ANSI_COLOR_RESET);
     scanf(" %c", &ConfQuiter);
     getchar();
 
@@ -736,18 +798,20 @@ int main()
 
     do
     {
-
-        printf(" =============== M E N U  P R I N C I P A L =============== \n");
-        printf("|                                                          |\n");
-        printf("|   1. Pour ajouter un joueur                              |\n");
-        printf("|   2. Pour afficher liste des joueurs                     |\n");
-        printf("|   3. Pour recherche un joueur                            |\n");
-        printf("|   4. Pour modifier un joueur                             |\n");
-        printf("|   5. Pour supprimer un joueur                            |\n");
-        printf("|   6. Pour les statistiques                               |\n");
-        printf("|   0. Quite                                               |\n");
-        printf("|                                                          |\n");
-        printf(" ========================================================== \n");
+        printf(ANSI_COLOR_MAGENTA "+=========================================================+\n");
+        printf("|============ GESTION D'UNE EQUIPE DE FOOTBALL ===========|\n");
+        printf( "+=========================================================+\n" ANSI_COLOR_RESET);
+        printf(ANSI_COLOR_YELLOW "|=============== M E N U  P R I N C I P A L ==============|\n" );
+        printf("|                                                         |\n" );
+        printf("|   1. Pour ajouter un joueur                             |\n" );
+        printf("|   2. Pour afficher liste des joueurs                    |\n" );
+        printf("|   3. Pour recherche un joueur                           |\n" );
+        printf("|   4. Pour modifier un joueur                            |\n" );
+        printf("|   5. Pour supprimer un joueur                           |\n" );
+        printf("|   6. Pour les statistiques                              |\n" );
+        printf("|   0. Quite                                              |\n" );
+        printf("|                                                         |\n" );
+        printf("=========================================================== \n" ANSI_COLOR_RESET);
         printf("==> Entrer votre choix : ");
         scanf(" %d", &choix);
         getchar();
