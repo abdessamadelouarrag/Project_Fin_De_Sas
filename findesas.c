@@ -64,6 +64,7 @@ void AjouterUnJoueur()
     printf("=> ");
     scanf(" %d", &Joueurs[NombreDeJoueurs].age);
 
+<<<<<<< HEAD
     // verifier age de joueur
     while (Joueurs[NombreDeJoueurs].age > 58 || Joueurs[NombreDeJoueurs].age < 16)
     {
@@ -119,6 +120,12 @@ void AjouterUnJoueur()
     } while (numeroexiste);
     
     menu1:
+=======
+    printf("Entrer numero de maillot: \n");
+    printf("=> ");
+    scanf(" %d", &Joueurs[NombreDeJoueurs].numeroMaillot);
+
+>>>>>>> 5dcdab483d098268dd6486ddf6bb2cf4776dda73
     printf("--> Entrer le poste de joureur : \n");
     printf("\t1. pour le gardien\n");
     printf("\t2. pour le defenseur\n");
@@ -129,6 +136,10 @@ void AjouterUnJoueur()
     scanf(" %d", &choixDePoste);
     getchar();
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5dcdab483d098268dd6486ddf6bb2cf4776dda73
     switch (choixDePoste)
     {
     case 1:
@@ -144,8 +155,12 @@ void AjouterUnJoueur()
         strcpy(Joueurs[NombreDeJoueurs].poste, "attaquant");
         break;
     default:
+<<<<<<< HEAD
         printf("Choix invalide, poste par defaut 'inconnu'\n");
         goto menu1;
+=======
+        printf("Choix invalide, poste 'inconnu'\n");
+>>>>>>> 5dcdab483d098268dd6486ddf6bb2cf4776dda73
     }
 
     printf("Entrer Combien De Buts : ");
@@ -255,6 +270,7 @@ void AfficherLaListeDeLesJoueur()
     printf(ANSI_COLOR_BLUE"=================================================================\n"ANSI_COLOR_RESET);
     printf("=> Votre choix : ");
     scanf(" %d", &choixDeTrie);
+    getchar();
 
     clearscreen();
 
@@ -309,6 +325,7 @@ void AfficherLaListeDeLesJoueur()
         printf("4. Pou afficher les attaquant  \n");
         printf("Entrer le choix de poste : ");
         scanf(" %d", &choixDePoste);
+        getchar();
 
         if (choixDePoste == 1)
         {
@@ -400,7 +417,6 @@ void AfficherLaListeDeLesJoueur()
     }
     printf(ANSI_COLOR_RED"\nappuyez sur entree pour retourneer au menu..."ANSI_COLOR_RESET);
     getchar();
-    getchar();
 
     clearscreen();
 }
@@ -454,6 +470,7 @@ void RechercheUnJoueur()
             printf("aucune joueur avec le nom de (%s) !\n", nomPourRecherche);
         }
     }
+
     else if (ChoixDeRecherche == 2)
     {
         printf("Entrer Id de joueur : ");
@@ -462,9 +479,9 @@ void RechercheUnJoueur()
 
         for (int i = 0; i < NombreDeJoueurs; i++)
         {
-            if (Joueurs[i].id == idrecherche)
+            if (idrecherche == Joueurs[i].id)
             {
-                clearscreen();
+                // clearscreen();
 
                 printf("=== Joueur Trouve ===\n");
                 printf("Id : %d\n", Joueurs[i].id);
@@ -476,7 +493,6 @@ void RechercheUnJoueur()
                 printf("Nombre de buts : %d\n", Joueurs[i].buts);
                 printf("\n");
                 idfound = 1;
-                break;
             }
         }
         if (idfound != 1)
@@ -506,8 +522,12 @@ void ModifierUnJoueur()
     int modifierPosteJoueur;
     int found = 0;
 
+<<<<<<< HEAD
     printf(ANSI_COLOR_YELLOW"======= M O D I F I E R  U N  J O U E U R =======\n"ANSI_COLOR_RESET);
     printf("=> Entrer le nom de joueur : \n");
+=======
+    printf("Entrer le nom de joueur : \n");
+>>>>>>> 5dcdab483d098268dd6486ddf6bb2cf4776dda73
     scanf(" %[^\n]", nomRecherche);
     getchar();
 
@@ -546,7 +566,11 @@ void ModifierUnJoueur()
                     strcpy(Joueurs[i].poste, "attaquant");
                     break;
                 default:
+<<<<<<< HEAD
                     printf("Choix invalide, poste non modifie.\n");
+=======
+                    printf("Choix invalide, poste non modifié.\n");
+>>>>>>> 5dcdab483d098268dd6486ddf6bb2cf4776dda73
                 }
             }
 
@@ -740,7 +764,12 @@ void Statistiques()
                 indexMax = i; // met à jour l'index du joueur avec le plus de buts
             }
         }
+<<<<<<< HEAD
         printf("Le Joueur plus de buts : %d\n", Joueurs[indexMax].buts);
+=======
+        printf("le meilleur buteur est : %s \n", Joueurs[indexMax].nom);
+        printf("total de buts marque : %d \n", Joueurs[indexMax].buts);
+>>>>>>> 5dcdab483d098268dd6486ddf6bb2cf4776dda73
     }
 
     printf("\nappuyez sur entree pour retourner au menu...");
@@ -843,7 +872,8 @@ int main()
             }
             break;
         default:
-            printf("Choix invalide, veuillez reessayer.\n");
+            clearscreen();
+            printf("*** Choix invalide, veuillez reessayer ***\n");
             break;
         }
     } while (choix != 0);
